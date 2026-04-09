@@ -99,12 +99,13 @@ add this job https://example.com/job123
 
 ### List jobs
 ```
-list jobs
-```
+Job Manager Output: Here are your saved jobs:
 
-### Update job status
-```
-update status for job ID 3 to Interviewing
+| Job Role | Company | Status |
+|----------|---------|--------|
+| Softwareentwickler Backend (m/w/d) | TechNova GmbH | applied (09.04.2026) |
+| Data Scientist (m/w/d) | DataWorks AG | applied (09.04.2026) |
+| DevOps Engineer (m/w/d) | CloudMasters GmbH | denied |
 ```
 
 ---
