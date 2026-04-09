@@ -99,6 +99,8 @@ add this job https://example.com/job123
 
 ### List jobs
 ```
+You: show jobs
+
 Job Manager Output: Here are your saved jobs:
 
 | Job Role | Company | Status |
