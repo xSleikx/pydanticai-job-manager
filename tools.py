@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 from datetime import datetime
 from typing import Set, Callable, Any
+from requests.exceptions import RequestException, SSLError, Timeout
 
 import requests
 from bs4 import BeautifulSoup
@@ -39,7 +40,10 @@ def read_jobs() -> List[Dict]:
 
 
 def write_jobs(jobs: List[Dict]):
-    JOB_FILE.write_text(json.dumps(jobs, ensure_ascii=False, indent=2))
+    JOB_FILE.write_text(
+        json.dumps(jobs, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
 
 
 # -------------------
@@ -66,15 +70,60 @@ def write_jobs(jobs: List[Dict]):
 #             )
 #         return "SEARCH_EMPTY"
 
-# fetch text rom the provided URL, Agent summarizes the content, and prepare data for storage in jobs.json
+# fetch text from the provided URL, Agent summarizes the content, and prepare data for storage in jobs.json
 def web_search(ctx, url: str) -> dict:
     print("\nweb_search tool used\n")
-    headers = {"User-Agent": "Mozilla/5.0"}
-    res = requests.get(url, headers=headers)
-    soup = BeautifulSoup(res.text, "html.parser")
 
-    text = soup.get_text(separator="\n", strip=True)
-    return text
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    try:
+        res = requests.get(url, headers=headers, timeout=10)
+        res.raise_for_status()  # raises HTTPError for bad status codes
+
+    except SSLError as e:
+        return {
+            "error": "SSL error",
+            "message": str(e),
+            "url": url
+        }
+
+    except Timeout:
+        return {
+            "error": "Timeout error",
+            "message": "Request took too long",
+            "url": url
+        }
+
+    except RequestException as e:
+        return {
+            "error": "Request error",
+            "message": str(e),
+            "url": url
+        }
+
+    try:
+        soup = BeautifulSoup(res.text, "html.parser")
+        text = soup.get_text(separator="\n", strip=True)
+
+        if not text:
+            return {
+                "error": "Empty content",
+                "url": url
+            }
+
+        return {
+            "url": url,
+            "text": text
+        }
+
+    except Exception as e:
+        return {
+            "error": "Parsing error",
+            "message": str(e),
+            "url": url
+        }
 
 async def add_job(ctx: RunContext, job: Job) -> dict:
     applied_date = datetime.utcnow().strftime("%d.%m.%Y")  # DD.MM.YYYY format
