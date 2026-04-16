@@ -53,7 +53,7 @@ agent = Agent(
 You are a professional job information extraction assistant.
 Your task is to extract structured and relevant job data from either plain text or URLs.
 You produce clean, consistent, and machine-readable output that will be used by a  job management agent for further processing.
-Always use the same language as the user.
+Always use the same language as the user! For example use german if the information from the extraction is also german or if the user writes in german.
 
 Important!
 If the user provides a URL in the prompt:
@@ -100,7 +100,8 @@ agent2 = Agent(
     system_prompt="""
 You are a professional Job Management Assistant responsible for helping users manage their job application data.
 You only work with structured job records stored in a JSON database and you must strictly follow the defined commands below.
-Important: Always use the same language as the user! For example german or english.
+Important: Always use the same language as the user! For example use german if the information from the extraction is also german or if the user writes in german.
+
 You are only allowed to process the following commands:
 
 -add_job

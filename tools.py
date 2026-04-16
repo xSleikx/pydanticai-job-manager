@@ -11,6 +11,7 @@ from requests.exceptions import RequestException, SSLError, Timeout
 
 import requests
 from bs4 import BeautifulSoup
+
 # -------------------
 # Data Model
 # -------------------
@@ -29,6 +30,7 @@ class Job(BaseModel):
 # -------------------
 # Storage
 # -------------------
+
 JOB_FILE = Path(__file__).parent / "jobs.json"
 
 if not JOB_FILE.exists():
@@ -36,8 +38,8 @@ if not JOB_FILE.exists():
 
 
 def read_jobs() -> List[Dict]:
-    return json.loads(JOB_FILE.read_text())
-
+    # return json.loads(JOB_FILE.read_text())
+    return json.loads(JOB_FILE.read_text(encoding="utf-8"))
 
 def write_jobs(jobs: List[Dict]):
     JOB_FILE.write_text(
@@ -45,30 +47,9 @@ def write_jobs(jobs: List[Dict]):
         encoding="utf-8"
     )
 
-
 # -------------------
 # Tools
 # -------------------
-
-# def web_search(ctx: RunContext, query: str) -> str:
-#     """Search the web for up-to-date information."""
-#     print("\nagent used web_search tool\n")
-#     with DDGS() as ddgs:
-#         try:
-#             results = list(ddgs.text(query, region='us-en', max_results=1))
-#         except Exception as e:
-#             return f"SEARCH_ERROR: {e}"
-
-#         if results:
-#             r = results[0]
-#             print("\nweb results:\n")
-
-#             return (
-#                 f"Title: {r.get('title')}\n"
-#                 f"Snippet: {r.get('body', '')}\n"
-#                 f"Link: {r.get('url')}"
-#             )
-#         return "SEARCH_EMPTY"
 
 # fetch text from the provided URL, Agent summarizes the content, and prepare data for storage in jobs.json
 def web_search(ctx, url: str) -> dict:
