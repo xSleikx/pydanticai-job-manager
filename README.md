@@ -1,6 +1,6 @@
 
 # 🧠 Job Manager Agent System  
-A two-agent system for **extracting**, **managing**, and **tracking** job applications using **PydanticAI**, custom tools, and local ollama models.
+A two-agent system for **extracting**, **managing**, and **tracking** job applications using **PydanticAI**, custom tools, and local **Ollama** models.
 
 ---
 
@@ -37,7 +37,7 @@ from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 ```
 
-### ✅ Search & Parsing Tools
+### ✅ Parsing Tools
 ```python
 import requests
 from bs4 import BeautifulSoup  # HTML parser
@@ -47,6 +47,7 @@ These support:
 - Web scraping
 - Local job storage
 - JSON management
+- Transform JSON to CSV
 - Unique IDs
 - Strong typing
 - Task extraction logic
@@ -122,8 +123,7 @@ All job management operations are executed through the following tools:
 - **update_job_role** – Change job title
 - **update_tasks** – Replace job task description
 - **jobs_count** – Return total number of stored jobs
-
----
+- **save_tocsv** – saves JSON data as a CSV file in a local directory
 
 ## ✅ Summary
 This system demonstrates:
