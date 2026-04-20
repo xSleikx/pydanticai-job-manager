@@ -10,9 +10,8 @@ file_path = os.path.join(script_dir, "jobs.json")
 with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-rows = []
-
 async def save_tocsv(ctx: RunContext) -> str: 
+    rows = []
     for job in data:
         jobtitel = job.get("job_role", "")
         unternehmen = job.get("company", "")
@@ -50,5 +49,5 @@ async def save_tocsv(ctx: RunContext) -> str:
 
     # print(f"CSV gespeichert unter: {output_file}")
     # result = df.to_string(index=False)
-    #    
+       
     return f"{output_file}"

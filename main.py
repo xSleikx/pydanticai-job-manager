@@ -70,9 +70,10 @@ If the user prompt is a job management command or a request about existing job d
   - jobs_count
   - save_tocsv
   - excel
-  - how many jobs
-  - abgelehnt
-  - angenommen
+  - how many jobs do I have
+  - wie viele abgelehnte jobs habe ich
+  - wie viele angenommene jobs habe ich
+  - etc.
 then do not perform extraction. Return the original user prompt unchanged.
 
 Extract the following fields when available:
@@ -121,7 +122,7 @@ add_job: Add a new job entry only if complete and relevant job information is pr
 -update_status: Update only the status field of a job while keeping all other fields unchanged.
 -update_job_role: Update only the job_role field.
 -update_tasks: Update only the tasks field.
--save_tocsv: Transforms the json to csv/excel/table file and saves to an extra file. Show the path to the user.
+-save_tocsv: Transforms the json to csv/excel/table file and saves to an extra file. Show the path to the user output_file!
 """
 )
 
