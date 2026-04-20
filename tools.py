@@ -62,6 +62,9 @@ def web_search(ctx, url: str) -> dict:
     try:
         res = requests.get(url, headers=headers, timeout=10)
         res.raise_for_status()  # raises HTTPError for bad status codes
+        # Explizit UTF-8 Decoding verwenden, um Encoding-Probleme zu vermeiden
+        res.encoding = 'utf-8'
+        text = res.text
 
     except SSLError as e:
         return {
