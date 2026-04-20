@@ -73,8 +73,9 @@ API_KEY=ollama
 .
 ├── main.py               # Entry point with both agents
 ├── tools.py              # Job manager tool functions
+├── csv_tool.py           # Job manager utility for transform JSON to CSV
 ├── README.md             # Documentation
-└── .env                  # Model config
+└── .env                  # Ollama model config
 ```
 
 ---
